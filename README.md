@@ -53,3 +53,9 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
   * 首先要了解组件这个东西 它是怎么创建的，为什么要创建，怎么取用组件，自己的组件和依赖的组件怎么在项目中用
   * 需要了解路由是怎么运作的，本地请求是怎样接收参数的，路由之间的跳转
   * 需要了解外部接口怎么调用
+
+* 如何部署线上
+  npm run build
+  项目会产生一个dist文件目录
+  假设你在本地运行springMVC项目
+  你把dist文件中的index.html放到WEB-INF/view下,static目录放到webapp目录下，写一个Controller地址映射到目标index.html，就可以访问了。
