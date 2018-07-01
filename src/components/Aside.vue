@@ -1,65 +1,62 @@
-<template xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<template>
 
+  <el-row class="tac">
+    <el-col :span="24">
+      <el-menu router :default-active="currentRoutePath" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
+        <template v-for="(issue,index) in $router.options.routes">
+          <template v-for="(item,index) in issue.children">
 
-    <el-menu :router="true">
-      <template v-for="menu in menuList">
-
-        <template v-if="!menu.children">
-          <el-menu-item :index="menu.index">
-            <template slot="title"><i :class="menu.icon"></i>{{menu.title}}</template>
-          </el-menu-item>
-        </template>
-
-        <template v-else>
-          <el-submenu :index="menu.index">
-            <template slot="title"><i :class="menu.icon"></i>{{menu.title}}</template>
-            <template v-for="subMenu in menu.children">
-              <el-menu-item :index="subMenu.index">{{subMenu.title}}</el-menu-item>
+            <template v-if="item.leaf&&item.children&&item.children.length">
+              <el-menu-item :index="item.children[0].path">
+                <i :class="item.iconCls"></i>
+                <span slot="title">{{item.children[0].name}}</span>
+              </el-menu-item>
             </template>
-          </el-submenu>
+            <template v-else-if="!item.leaf">
+
+              <el-submenu :index="item.path">
+                <template slot="title">
+                  <i :class="item.iconCls"></i>
+                  <span>{{item.name}}</span>
+                </template>
+                <el-menu-item-group>
+                  <template v-for="term in item.children">
+                    <template v-if="term.menuShow">
+                      <el-menu-item :key="term.path" :index="term.path">{{term.name}}</el-menu-item>
+                    </template>
+                  </template>
+                </el-menu-item-group>
+              </el-submenu>
+            </template>
+          </template>
         </template>
+      </el-menu>
+    </el-col>
+  </el-row>
 
-      </template>
-
-    </el-menu>
 </template>
 
 <script>
   export default {
     data() {
       return {
-        menuList: [{
-          index: '/',
-          url: 'http://www.baidu.com',
-          icon: 'el-icon-menu',
-          title: 'Dashboard'
-        },{
-          index: 'menu2',
-          url: 'http://www.baidu.com',
-          icon: 'el-icon-message',
-          title: '消息',
-          children: [{
-            index: 'menu2-1',
-            url: 'www.baidu.com',
-            title: '未读'
-          }]
-        },{
-          index: 'menu3',
-          url: 'http://www.baidu.com',
-          icon: 'el-icon-setting',
-          title: '设置',
-          children: [{
-            index: 'menu3-1',
-            url: 'www.baidu.com',
-            title: '密码'
-          }]
-        },{
-          index: '/user',
-          url: '/user',
-          icon: 'el-icon-setting',
-          title: '用户管理'
-        }]
+
+      }
+    },
+    computed: {
+      currentRoutePath () {
+        return this.$route.meta.menuIndex
+      }
+    },
+    methods: {
+      handleOpen(key, keyPath) {
+        console.log(key, keyPath);
+      },
+      handleClose(key, keyPath) {
+        console.log(key, keyPath);
       }
     }
   };
 </script>
+
+

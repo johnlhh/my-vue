@@ -24,7 +24,7 @@
 
 <style>
 
-  .el-header{
+/*  .el-header{
     color: #333;
     line-height: 60px;
   }
@@ -52,7 +52,7 @@
 
   .el-container:nth-child(7) .el-aside {
     line-height: 320px;
-  }
+  }*/
 </style>
 
 
